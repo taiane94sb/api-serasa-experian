@@ -1,4 +1,4 @@
-package com.serasaexperian.api;
+package com.serasaexperian.api.controller;
 
 import com.serasaexperian.domain.model.Endereco;
 import com.serasaexperian.domain.service.EnderecoService;

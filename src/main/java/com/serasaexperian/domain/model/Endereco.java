@@ -1,5 +1,6 @@
 package com.serasaexperian.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -27,4 +28,8 @@ public class Endereco {
     private String bairro;
 
     private String logradouro;
+
+    @OneToOne(mappedBy = "endereco")
+    @JsonBackReference
+    private Pessoa pessoa;
 }
