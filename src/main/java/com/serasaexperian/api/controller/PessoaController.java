@@ -68,7 +68,7 @@ public class PessoaController {
 
     @GetMapping("porIdade/{pessoaIdade}")
     @Operation(summary = "Pessoa cadastrada que possui a idade fornecida", description = "Retorna a pessoa baseado na idade fornecida")
-    public ResponseEntity<Pessoa> buscarPessoaPorIdade(@PathVariable Integer pessoaIdade) {
+    public ResponseEntity<List<Pessoa>> buscarPessoaPorIdade(@PathVariable Integer pessoaIdade) {
         return pessoaRepository.findByIdade(pessoaIdade)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
