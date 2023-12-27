@@ -13,6 +13,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +38,16 @@ public class PessoaController {
     @Operation(summary = "Listagem de pessoas cadastradas", description = "Retorna a lista de pessoas cadastradas")
     public List<PessoaOutput> listar() {
         return pessoaAssembler.toCollectionModel(pessoaRepository.findAll());
+    }
+
+    @GetMapping("listarPessoasPaginadas")
+    @Operation(summary = "Listagem páginada de pessoas cadastradas", description = "Retorna a lista páginada de pessoas cadastradas")
+    public List<PessoaOutput> listarPessoasPaginadas(
+            @PageableDefault(sort = "nome",
+                    direction = Sort.Direction.ASC,
+                    page = 0,
+                    size = 2) Pageable page) {
+        return pessoaAssembler.toCollectionModel(pessoaService.listaPessoasPaginadas(page).getContent());
     }
 
     @GetMapping("porId/{pessoaId}")

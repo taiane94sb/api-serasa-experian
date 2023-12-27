@@ -6,6 +6,8 @@ import com.serasaexperian.domain.model.Pessoa;
 import com.serasaexperian.domain.repository.PessoaRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -29,6 +31,10 @@ public class PessoaService {
         }
 
         return pessoaRepository.save(pessoa);
+    }
+
+    public Page<Pessoa> listaPessoasPaginadas(Pageable pageable) {
+        return pessoaRepository.findAll(pageable);
     }
 
     @Transactional
