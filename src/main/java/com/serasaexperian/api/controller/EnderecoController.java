@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/enderecos")
+@Tag(name = "Endereço", description = "Endereço")
 public class EnderecoController {
 
     private final EnderecoService enderecoService;
 
     @GetMapping("/{cep}")
-    @Tag(name = "Endereço", description = "Endereço")
-    @Operation(summary = "Endereço que possui o cep fornecido", description = "Retorna as inormações do endereço baseado no cep fornecido")
+    @Operation(summary = "Endereço que possui o cep fornecido", description = "Retorna as informações do endereço baseado no cep fornecido")
     public Endereco buscaEnderecoPeloCep(@PathVariable String cep) throws Exception {
         return enderecoService.buscarEnderecoPeloCep(cep);
     }
