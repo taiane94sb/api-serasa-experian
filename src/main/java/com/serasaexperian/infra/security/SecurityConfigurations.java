@@ -42,6 +42,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/enderecos/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/pessoas").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/pessoas/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/pessoas/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/pessoas/listarPessoas").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/pessoas/listarPessoasPaginadas").permitAll()

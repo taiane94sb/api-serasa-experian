@@ -3,6 +3,7 @@ package com.serasaexperian.api.controller;
 import com.serasaexperian.api.assembler.PessoaAssembler;
 import com.serasaexperian.api.model.input.PessoaInput;
 import com.serasaexperian.api.model.output.PessoaOutput;
+import com.serasaexperian.domain.exception.NegocioException;
 import com.serasaexperian.domain.model.Pessoa;
 import com.serasaexperian.domain.repository.PessoaRepository;
 import com.serasaexperian.domain.service.EnderecoService;
@@ -112,5 +113,32 @@ public class PessoaController {
 
         pessoaService.deletar(pessoaId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{pessoaId}")
+    @Operation(summary = "Atualiza uma pessoa que possui o id fornecido", description = "Atualiza uma pessoa baseado no id fornecido")
+    @SecurityRequirement(name = "jwt_auth")
+    public PessoaOutput atualizar(@PathVariable Long pessoaId,
+                                                  @Valid @RequestBody PessoaInput pessoaInput) {
+        Pessoa pessoaAtualizada = pessoaRepository.findById(pessoaId)
+                .orElseThrow(() -> new NegocioException("Pessoa não encontrada"));
+
+        Pessoa novaPessoa = pessoaAssembler.toEntity(pessoaInput);
+
+        try {
+            enderecoService.deletar(pessoaAtualizada.getEndereco().getId());
+
+            novaPessoa.setId(pessoaId);
+            pessoaService.cadastrar(novaPessoa, pessoaInput.getCep());
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        PessoaOutput pessoaOutput = pessoaAssembler.toModel(novaPessoa);
+        String pessoaScore = pessoaService.descricaoScore(pessoaOutput.getScore());
+        pessoaOutput.setScoreDescription(pessoaScore);
+
+        return pessoaOutput;
     }
 }

@@ -2,7 +2,9 @@ package com.serasaexperian.domain.service;
 
 import com.google.gson.Gson;
 import com.serasaexperian.domain.model.Endereco;
+import com.serasaexperian.domain.repository.EnderecoRepository;
 import com.serasaexperian.util.Util;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.net.URL;
 @AllArgsConstructor
 @Service
 public class EnderecoService {
+
+    private final EnderecoRepository enderecoRepository;
 
     public Endereco buscarEnderecoPeloCep (String cep) throws Exception {
         String enderecoURL = "https://viacep.com.br/ws/" + cep + "/json/";
@@ -31,5 +35,10 @@ public class EnderecoService {
         } catch (Exception msgErro) {
             throw  new Exception("Erro de conexão - status Code [" + conexao.getResponseCode() + "]. " + msgErro.toString());
         }
+    }
+
+    @Transactional
+    public void deletar(Long enderecoId) {
+        enderecoRepository.deleteById(enderecoId);
     }
 }
