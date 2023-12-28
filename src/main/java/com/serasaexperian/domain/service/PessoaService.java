@@ -41,4 +41,20 @@ public class PessoaService {
     public void deletar(Long pessoaId) {
         pessoaRepository.deleteById(pessoaId);
     }
+
+    public String descricaoScore(Integer score) {
+        String descricaoScore = "";
+
+        if (score >= 0 & score <= 200) {
+            descricaoScore = "Insuficiente";
+        } else if (score >= 201 & score <= 500) {
+            descricaoScore = "Inaceitável";
+        } else if (score >= 501 & score <= 700) {
+            descricaoScore = "Aceitável";
+        } else if (score >= 701 & score <= 1000) {
+            descricaoScore = "Recomendável";
+        }
+
+        return descricaoScore;
+    }
 }

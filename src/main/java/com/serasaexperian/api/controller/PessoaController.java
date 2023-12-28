@@ -3,7 +3,6 @@ package com.serasaexperian.api.controller;
 import com.serasaexperian.api.assembler.PessoaAssembler;
 import com.serasaexperian.api.model.input.PessoaInput;
 import com.serasaexperian.api.model.output.PessoaOutput;
-import com.serasaexperian.domain.exception.NegocioException;
 import com.serasaexperian.domain.model.Pessoa;
 import com.serasaexperian.domain.repository.PessoaRepository;
 import com.serasaexperian.domain.service.EnderecoService;
@@ -88,12 +87,17 @@ public class PessoaController {
     public PessoaOutput cadastrar(@Valid @RequestBody PessoaInput pessoaInput) {
         Pessoa novaPessoa = pessoaAssembler.toEntity(pessoaInput);
         Pessoa pessoaCadastrada = null;
+
         try {
             pessoaCadastrada = pessoaService.cadastrar(novaPessoa, pessoaInput.getCep());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return pessoaAssembler.toModel(pessoaCadastrada);
+
+        PessoaOutput pessoaOutput = pessoaAssembler.toModel(pessoaCadastrada);
+        String pessoaScore = pessoaService.descricaoScore(pessoaOutput.getScore());
+        pessoaOutput.setScoreDescription(pessoaScore);
+        return pessoaOutput;
     }
 
     @DeleteMapping("/{pessoaId}")

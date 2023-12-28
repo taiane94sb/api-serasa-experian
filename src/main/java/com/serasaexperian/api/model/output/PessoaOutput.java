@@ -19,4 +19,6 @@ public class PessoaOutput {
     private String telefone;
 
     private Integer score;
+
+    private String scoreDescription;
 }
