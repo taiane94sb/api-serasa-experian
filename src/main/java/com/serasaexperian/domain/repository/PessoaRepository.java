@@ -14,5 +14,5 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long>  {
     Optional<Pessoa> findByNome(String nome);
     Optional<List<Pessoa>> findByIdade(Integer idade);
 
-//    Optional<Pessoa> findByEndereco_Cep(String cep);
+    Optional<List<Pessoa>> findByEndereco_Cep(String cep);
 }

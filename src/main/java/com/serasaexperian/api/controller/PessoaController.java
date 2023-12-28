@@ -74,6 +74,14 @@ public class PessoaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("porCep/{pessoaCep}")
+    @Operation(summary = "Pessoa cadastrada que possui o cep fornecida", description = "Retorna a pessoa baseado no cep fornecida")
+    public ResponseEntity<List<Pessoa>> buscarPessoaPorCep(@PathVariable String pessoaCep) {
+        return pessoaRepository.findByEndereco_Cep(pessoaCep)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Cadastra uma pessoa com as informações fornecidas", description = "Cadastra uma pessoa baseadas nas informações fornecidas")
