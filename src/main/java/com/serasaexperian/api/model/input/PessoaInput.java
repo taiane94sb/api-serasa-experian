@@ -24,6 +24,6 @@ public class PessoaInput {
 
     @NotNull(message = "Score é obrigatório")
     @Min(0)
-    @Max(100)
+    @Max(1000)
     private Integer score;
 }
