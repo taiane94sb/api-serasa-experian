@@ -44,7 +44,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/api/pessoas/listarPessoasPaginadas").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/pessoas/porId/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/pessoas/porNome/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/pessoas/pessoaIdade/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/pessoas/porIdade/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/pessoas/porCep/**").permitAll()
                         .requestMatchers(SWAGGER_LIST).permitAll()
                         .anyRequest().authenticated()
