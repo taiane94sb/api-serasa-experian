@@ -8,6 +8,7 @@ import com.serasaexperian.domain.repository.PessoaRepository;
 import com.serasaexperian.domain.service.EnderecoService;
 import com.serasaexperian.domain.service.PessoaService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -84,6 +85,7 @@ public class PessoaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Cadastra uma pessoa com as informações fornecidas", description = "Cadastra uma pessoa baseadas nas informações fornecidas")
+    @SecurityRequirement(name = "jwt_auth")
     public PessoaOutput cadastrar(@Valid @RequestBody PessoaInput pessoaInput) {
         Pessoa novaPessoa = pessoaAssembler.toEntity(pessoaInput);
         Pessoa pessoaCadastrada = null;
@@ -102,6 +104,7 @@ public class PessoaController {
 
     @DeleteMapping("/{pessoaId}")
     @Operation(summary = "Remove uma pessoa que possui o id fornecido", description = "Remove uma pessoa baseado no id fornecido")
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Pessoa> deletar(@PathVariable Long pessoaId) {
         if(!pessoaRepository.existsById(pessoaId)) {
             return ResponseEntity.notFound().build();
