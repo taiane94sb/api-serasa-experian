@@ -12,12 +12,6 @@ public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {
 
-        var modelMapper = new ModelMapper();
-
-        modelMapper.createTypeMap(Pessoa.class, PessoaOutput.class)
-                .addMappings(mapper -> mapper
-                        .map(Pessoa::getScore, PessoaOutput::setScoreDescription));
-
-        return modelMapper;
+        return new ModelMapper();
     }
 }

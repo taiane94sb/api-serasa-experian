@@ -38,4 +38,6 @@ public class Pessoa {
     @Min(0)
     @Max(1000)
     private Integer score;
+
+    private String scoreDescription;
 }

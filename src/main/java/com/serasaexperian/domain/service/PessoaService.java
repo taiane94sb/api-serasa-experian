@@ -3,6 +3,7 @@ package com.serasaexperian.domain.service;
 import com.serasaexperian.domain.exception.NegocioException;
 import com.serasaexperian.domain.model.Endereco;
 import com.serasaexperian.domain.model.Pessoa;
+import com.serasaexperian.domain.repository.EnderecoRepository;
 import com.serasaexperian.domain.repository.PessoaRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ public class PessoaService {
 
     private final EnderecoService enderecoService;
     private final PessoaRepository pessoaRepository;
+    private final EnderecoRepository enderecoRepository;
 
     @Transactional
     public Pessoa cadastrar(Pessoa pessoa, String cep) throws Exception {
@@ -29,6 +31,8 @@ public class PessoaService {
         if (pessoaJaCadastrada.isPresent()) {
             throw new NegocioException("Já existe uma pessoa cadastrado com este nome");
         }
+
+        pessoa.setScoreDescription(descricaoScore(pessoa.getScore()));
 
         return pessoaRepository.save(pessoa);
     }
