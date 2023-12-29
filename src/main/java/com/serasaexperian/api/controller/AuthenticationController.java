@@ -6,6 +6,8 @@ import com.serasaexperian.api.model.auth.Register;
 import com.serasaexperian.domain.model.User;
 import com.serasaexperian.domain.repository.UserRepository;
 import com.serasaexperian.infra.security.TokenService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Autenticação", description = "Autenticação")
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
@@ -28,6 +31,7 @@ public class AuthenticationController {
     private final TokenService tokenService;
 
     @PostMapping("/login")
+    @Operation(summary = "Login de um usuário", description = "Loga um usuário baseado no login e password fornecidos, e retorna um token")
     public ResponseEntity login(@RequestBody @Valid AuthenticationInput data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
@@ -37,6 +41,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
+    @Operation(summary = "Registra um novo usuário", description = "Registra um novo usuário baseado no login, password e role fornecidos")
     public ResponseEntity register(@RequestBody @Valid Register data){
         if(this.userRepository.findByLogin(data.login()) != null) {
             return ResponseEntity.badRequest().build();
